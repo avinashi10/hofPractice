@@ -101,20 +101,35 @@ var filterUserTweets = function(tweets, user) {
 // given an array of strings, use _.map to return a new array containing all
 // strings converted to uppercase letters.
 var upperCaseFruits = function (fruits) {
-
+  var mapArr = _.map(fruits, function(fruit) {
+    return fruit.toUpperCase();
+  });
+  return mapArr;
 };
 
 // given an array of dessert objects, return a new array of objects
 // that have a new "glutenFree" property, with a boolean value.
 // TIP: Items that contain flour are not gluten-free.
 var glutenFree = function (desserts) {
-
+  var mapArr = _.map(desserts, function(obj) {
+    if (obj['ingredients'].includes('flour')) {
+      obj['glutenFree'] = false;
+      return obj;
+    } else {
+      obj['glutenFree'] = true;
+      return obj;
+    }
+  });
+  return mapArr;
 };
 
 // given an array of tweet objects, return a new array of strings
 // containing only the message properties.
 var allUserMessages = function(tweets) {
-
+  var strArr = _.map(tweets, function(obj) {
+    return obj['message'];
+  });
+  return strArr;
 };
 
 // use _.map to return an array of items with their sale prices, with a new property
@@ -138,7 +153,13 @@ var allUserMessages = function(tweets) {
 
 */
 var applyCoupon = function (groceries, coupon) {
-
+  var mapArr = _.map(groceries, function(obj) {
+    var priceFloat = parseFloat(obj['price'].slice(1));
+    var salePrice = priceFloat - coupon;
+    obj['salePrice'] = '$' + salePrice;
+    return obj;
+  });
+  return mapArr;
 };
 
 /*
@@ -148,8 +169,13 @@ var applyCoupon = function (groceries, coupon) {
  */
 
 // return the total price of all products.
-var sumTotal = function (products) {
-
+var sumTotal = function (groceries) {
+  var total = _.reduce(groceries, function(obj) {
+    var subTotal = 0;
+    subTotal += obj['price'];
+    return subTotal;
+  });
+  return total;
 };
 
 // return an object consisting of dessert types and how many of each.
